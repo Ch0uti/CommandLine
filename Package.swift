@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-  name: "CommandLine",
+  name: "CommandLineKit",
   products: [
     .library(
       name: "CommandLineKit",
@@ -16,7 +16,7 @@ let package = Package(
       dependencies: []
     ),
     .testTarget(
-      name: "CommandLineTests",
+      name: "CommandLineKitTests",
       dependencies: ["CommandLineKit"]
     ),
   ]

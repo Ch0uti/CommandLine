@@ -3,4 +3,4 @@ build:
 
 xcode:
 	swift package generate-xcodeproj
-	open ./CommandLine.xcodeproj
+	open ./CommandLineKit.xcodeproj
