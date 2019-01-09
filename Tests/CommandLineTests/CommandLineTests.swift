@@ -807,7 +807,7 @@ internal class CommandLineTests: XCTestCase {
     XCTAssertGreaterThan(out.count, 0)
 
     /* There should be at least 2 lines per option, plus the intro Usage statement */
-    XCTAssertGreaterThanOrEqual(out.split(by: "\n").count, (opts.count * 2) + 1)
+    XCTAssertGreaterThanOrEqual(out.split(separator: "\n").count, (opts.count * 2) + 1)
   }
 
   func testPrintUsageError() {
@@ -822,7 +822,7 @@ internal class CommandLineTests: XCTestCase {
       var out = ""
       cli.printUsage(error, to: &out)
 
-      let errorMessage = out.split(by: "\n", maxSplits: 1)[0]
+      let errorMessage = out.split(separator: "\n", maxSplits: 1)[0]
       XCTAssertTrue(errorMessage.hasPrefix("Missing required"))
     }
   }
@@ -888,7 +888,7 @@ internal class CommandLineTests: XCTestCase {
       var out = ""
       cli.printUsage(error, to: &out)
 
-      let o = out.split(by: "\n")
+      let o = out.split(separator: "\n")
       XCTAssertTrue(o[0].hasPrefix("[ERROR]"))
       XCTAssertTrue(o[1].hasPrefix("[ABOUT]"))
 

@@ -310,7 +310,7 @@ public class CommandLine {
       }
 
       /* Remove attached argument from flag */
-      let splitFlag = String(flagWithArg).split(by: argumentAttacher, maxSplits: 1)
+      let splitFlag = String(flagWithArg).split(separator: argumentAttacher, maxSplits: 1).map(String.init)
       let flag = splitFlag[0]
       let attachedArg: String? = splitFlag.count == 2 ? splitFlag[1] : nil
 

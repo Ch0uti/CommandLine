@@ -23,7 +23,6 @@ class StringExtensionTests: XCTestCase {
   static var allTests : [(String, (StringExtensionTests) -> () throws -> Void)] {
     return [
       ("testToDouble", testToDouble),
-      ("testSplit", testSplit),
       ("testPadded", testPadded),
       ("testWrapped", testWrapped),
     ]
@@ -96,23 +95,6 @@ class StringExtensionTests: XCTestCase {
     setlocale(LC_NUMERIC, "")
   }
 
-  func testSplit() {
-    let a = "1,2,3".split(by: ",")
-    XCTAssertEqual(a.count, 3, "Failed to split into correct number of components")
-
-    let b = "123".split(by: ",")
-    XCTAssertEqual(b.count, 1, "Failed to split when separator not found")
-
-    let c = "".split(by: ",")
-    XCTAssertEqual(c.count, 0, "Splitting empty string should return empty array")
-
-    let e = "a-b-c-d".split(by: "-", maxSplits: 2)
-    XCTAssertEqual(e.count, 3, "Failed to limit splits")
-    XCTAssertEqual(e[0], "a", "Invalid value for split 1")
-    XCTAssertEqual(e[1], "b", "Invalid value for split 2")
-    XCTAssertEqual(e[2], "c-d", "Invalid value for last split")
-  }
-
   func testPadded() {
     let a = "this is a test"
 
@@ -134,13 +116,13 @@ class StringExtensionTests: XCTestCase {
 
   func testWrapped() {
     let lipsum = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    for line in lipsum.wrapped(atWidth: 80).split(by: "\n") {
+    for line in lipsum.wrapped(atWidth: 80).split(separator: "\n") {
       XCTAssertLessThanOrEqual(line.count, 80, "Failed to wrap long line: \(line)")
     }
 
     /* Words longer than the wrap width should not be split */
     let longWords = "Lorem ipsum consectetur adipisicing eiusmod tempor incididunt"
-    let lines = longWords.wrapped(atWidth: 3).split(by: "\n")
+    let lines = longWords.wrapped(atWidth: 3).split(separator: "\n")
     XCTAssertEqual(lines.count, 8, "Failed to wrap long words")
     for line in lines {
       XCTAssertGreaterThan(line.count, 3, "Bad long word wrapping on line: \(line)")
