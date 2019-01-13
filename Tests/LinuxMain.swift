@@ -17,5 +17,9 @@
 
 import XCTest
 
-XCTMain([testCase(CommandLineTests.allTests),
-         testCase(StringExtensionTests.allTests)])
+XCTMain(
+  [
+    testCase(CommandLineTests.allTests),
+    testCase(StringExtensionTests.allTests),
+  ]
+)

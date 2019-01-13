@@ -1,0 +1,11 @@
+# rules
+--enable isEmpty
+
+# format options
+--decimalgrouping none
+--importgrouping testable-bottom
+--indent 2
+--ranges nospace
+--self init-only
+--wraparguments beforefirst
+--wrapcollections beforefirst

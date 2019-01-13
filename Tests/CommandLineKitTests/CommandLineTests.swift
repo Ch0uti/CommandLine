@@ -20,7 +20,7 @@ import XCTest
 @testable import CommandLineKit
 
 internal class CommandLineTests: XCTestCase {
-  static var allTests : [(String, (CommandLineTests) -> () throws -> Void)] {
+  static var allTests: [(String, (CommandLineTests) -> () throws -> Void)] {
     return [
       ("testBoolOptions", testBoolOptions),
       ("testIntOptions", testIntOptions),
@@ -59,7 +59,7 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testBoolOptions() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-a", "--bool", "-c", "-c", "-ddd" ])
+    let cli = CommandLine(arguments: ["CommandLineTests", "-a", "--bool", "-c", "-c", "-ddd"])
 
     /* Short flag */
     let a = BoolOption(shortFlag: "a", longFlag: "a1", helpMessage: "")
@@ -95,8 +95,12 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testIntOptions() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-a", "1", "--bigs", "2", "-c", "3",
-      "-c", "4", "-ddd", "-e", "bad", "-f", "-g", "-5" ])
+    let cli = CommandLine(
+      arguments: [
+        "CommandLineTests", "-a", "1", "--bigs", "2", "-c", "3",
+        "-c", "4", "-ddd", "-e", "bad", "-f", "-g", "-5",
+      ]
+    )
 
     /* Short flag */
     let a = IntOption(shortFlag: "a", longFlag: "a1", required: false, helpMessage: "")
@@ -176,8 +180,12 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testCounterOptions() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-a", "--bach", "-c", "-c",
-      "--doggerel", "-doggerel", "--doggerel", "-eeee"])
+    let cli = CommandLine(
+      arguments: [
+        "CommandLineTests", "-a", "--bach", "-c", "-c",
+        "--doggerel", "-doggerel", "--doggerel", "-eeee",
+      ]
+    )
 
     /* Short flag */
     let a = CounterOption(shortFlag: "a", longFlag: "a1", helpMessage: "")
@@ -215,9 +223,13 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testDoubleOptions() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-a", "1.4", "--baritone", "2.5",
-      "-c", "5.0", "-c", "5.2", "--dingus", "8.5", "--dingus", "8.8", "-e", "95",
-      "-f", "bad", "-g", "-h", "-3.14159" ])
+    let cli = CommandLine(
+      arguments: [
+        "CommandLineTests", "-a", "1.4", "--baritone", "2.5",
+        "-c", "5.0", "-c", "5.2", "--dingus", "8.5", "--dingus", "8.8", "-e", "95",
+        "-f", "bad", "-g", "-h", "-3.14159",
+      ]
+    )
 
     setlocale(LC_ALL, "C")
 
@@ -264,7 +276,6 @@ internal class CommandLineTests: XCTestCase {
       XCTFail("Unexpected parse error: \(error)")
     }
 
-
     /* No value */
     let g = DoubleOption(shortFlag: "g", longFlag: "g1", required: true, helpMessage: "")
     cli.setOptions(g)
@@ -309,8 +320,12 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testStringOptions() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-a", "one", "--b1", "two", "-c", "x", "-c", "xx",
-      "--d1", "y", "--d1", "yy", "-e" ])
+    let cli = CommandLine(
+      arguments: [
+        "CommandLineTests", "-a", "one", "--b1", "two", "-c", "x", "-c", "xx",
+        "--d1", "y", "--d1", "yy", "-e",
+      ]
+    )
 
     /* Short flag */
     let a = StringOption(shortFlag: "a", longFlag: "a1", required: true, helpMessage: "")
@@ -353,8 +368,12 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testMultiStringOptions() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-a", "one", "-b", "two", "2wo",
-      "--c1", "three", "--d1", "four", "4our", "-e" ])
+    let cli = CommandLine(
+      arguments: [
+        "CommandLineTests", "-a", "one", "-b", "two", "2wo",
+        "--c1", "three", "--d1", "four", "4our", "-e",
+      ]
+    )
 
     /* Short flags */
     let a = MultiStringOption(shortFlag: "a", longFlag: "a1", required: true, helpMessage: "")
@@ -399,7 +418,7 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testConcatOptionWithValue() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-xvf", "file1", "file2" ])
+    let cli = CommandLine(arguments: ["CommandLineTests", "-xvf", "file1", "file2"])
 
     let x = BoolOption(shortFlag: "x", longFlag: "x1", helpMessage: "")
     let v = CounterOption(shortFlag: "v", longFlag: "v1", helpMessage: "")
@@ -420,7 +439,7 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testMissingRequiredOption() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-a", "-b", "foo", "-q", "quux" ])
+    let cli = CommandLine(arguments: ["CommandLineTests", "-a", "-b", "foo", "-q", "quux"])
     let c = StringOption(shortFlag: "c", longFlag: "c1", required: true, helpMessage: "")
 
     cli.addOption(c)
@@ -437,7 +456,7 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testAttachedArgumentValues() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-a=5", "--bb=klaxon" ])
+    let cli = CommandLine(arguments: ["CommandLineTests", "-a=5", "--bb=klaxon"])
 
     let a = IntOption(shortFlag: "a", longFlag: "a1", required: true, helpMessage: "")
     let b = StringOption(shortFlag: "b", longFlag: "bb", required: true, helpMessage: "")
@@ -454,11 +473,10 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testEmojiOptions() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-👻", "3", "--👍", "☀️" ])
+    let cli = CommandLine(arguments: ["CommandLineTests", "-👻", "3", "--👍", "☀️"])
 
     let a = IntOption(shortFlag: "👻", longFlag: "👻", required: true, helpMessage: "")
     let b = StringOption(shortFlag: "👍", longFlag: "👍", required: true, helpMessage: "")
-
 
     cli.addOptions(a, b)
 
@@ -479,7 +497,7 @@ internal class CommandLineTests: XCTestCase {
       case verify = "v"
     }
 
-    let cli = CommandLine(arguments: [ "CommandLineTests", "--operation", "x" ])
+    let cli = CommandLine(arguments: ["CommandLineTests", "--operation", "x"])
     let op = EnumOption<Operation>(shortFlag: "o", longFlag: "operation", required: true, helpMessage: "")
 
     cli.setOptions(op)
@@ -493,7 +511,7 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testArgumentStopper() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-a", "--", "-value", "--", "-55" ])
+    let cli = CommandLine(arguments: ["CommandLineTests", "-a", "--", "-value", "--", "-55"])
     let op = MultiStringOption(shortFlag: "a", longFlag: "a1", required: true, helpMessage: "")
 
     cli.setOptions(op)
@@ -511,11 +529,11 @@ internal class CommandLineTests: XCTestCase {
 
   func testFlagStyles() {
     let argLines = [
-      [ "CommandLineTests", "-xvf", "/path/to/file" ],
-      [ "CommandLineTests", "-x", "-v", "-f", "/path/to/file" ],
-      [ "CommandLineTests", "-x", "--verbose", "--file", "/path/to/file" ],
-      [ "CommandLineTests", "-xv", "--file", "/path/to/file" ],
-      [ "CommandLineTests", "--extract", "-v", "--file=/path/to/file" ]
+      ["CommandLineTests", "-xvf", "/path/to/file"],
+      ["CommandLineTests", "-x", "-v", "-f", "/path/to/file"],
+      ["CommandLineTests", "-x", "--verbose", "--file", "/path/to/file"],
+      ["CommandLineTests", "-xv", "--file", "/path/to/file"],
+      ["CommandLineTests", "--extract", "-v", "--file=/path/to/file"],
     ]
 
     for args in argLines {
@@ -538,7 +556,7 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testEmptyFlags() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-", "--"])
+    let cli = CommandLine(arguments: ["CommandLineTests", "-", "--"])
 
     do {
       try cli.parse()
@@ -552,33 +570,33 @@ internal class CommandLineTests: XCTestCase {
    */
 
   /*
-  func testShortFlagReuse() {
-    let cli = CommandLine(arguments: [])
-    let op1 = BoolOption(shortFlag: "v", longFlag: "verbose", helpMessage: "")
-    let op2 = StringOption(shortFlag: "v", longFlag: "verify", helpMessage: "")
-    cli.addOptions(op1, op2)
-    XCTFail("Added two options with the same short flag")
-  }
+   func testShortFlagReuse() {
+   let cli = CommandLine(arguments: [])
+   let op1 = BoolOption(shortFlag: "v", longFlag: "verbose", helpMessage: "")
+   let op2 = StringOption(shortFlag: "v", longFlag: "verify", helpMessage: "")
+   cli.addOptions(op1, op2)
+   XCTFail("Added two options with the same short flag")
+   }
 
-  func testLongFlagReuse() {
-    let cli = CommandLine(arguments: [])
-    let op1 = BoolOption(shortFlag: "v", longFlag: "verbose", helpMessage: "")
-    let op2 = StringOption(shortFlag: "d", longFlag: "verbose", helpMessage: "")
-    cli.addOptions(op1, op2)
-    XCTFail("Added two options with the same long flag")
-  }
+   func testLongFlagReuse() {
+   let cli = CommandLine(arguments: [])
+   let op1 = BoolOption(shortFlag: "v", longFlag: "verbose", helpMessage: "")
+   let op2 = StringOption(shortFlag: "d", longFlag: "verbose", helpMessage: "")
+   cli.addOptions(op1, op2)
+   XCTFail("Added two options with the same long flag")
+   }
 
-  func testSetOptionFlagReuse() {
-    let cli = CommandLine(arguments: [])
-    let opts = [
-      BoolOption(shortFlag: "v", longFlag: "verbose", helpMessage: ""),
-      StringOption(shortFlag: "v", longFlag: "verify", helpMessage: "")
-    ]
+   func testSetOptionFlagReuse() {
+   let cli = CommandLine(arguments: [])
+   let opts = [
+   BoolOption(shortFlag: "v", longFlag: "verbose", helpMessage: ""),
+   StringOption(shortFlag: "v", longFlag: "verify", helpMessage: "")
+   ]
 
-    cli.setOptions(opts)
-    XCTFail("Set options to an array with a reused flag")
-  }
-  */
+   cli.setOptions(opts)
+   XCTFail("Set options to an array with a reused flag")
+   }
+   */
 
   func testDifferentCaseFlagReuse() {
     let cli = CommandLine(arguments: [])
@@ -588,22 +606,36 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testMixedExample() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-dvvv", "--name", "John Q. Public",
-      "-f", "45", "-p", "0.05", "-x", "extra1", "extra2", "extra3" ])
+    let cli = CommandLine(
+      arguments: [
+        "CommandLineTests", "-dvvv", "--name", "John Q. Public",
+        "-f", "45", "-p", "0.05", "-x", "extra1", "extra2", "extra3",
+      ]
+    )
 
     setlocale(LC_ALL, "C")
 
     let boolOpt = BoolOption(shortFlag: "d", longFlag: "debug", helpMessage: "Enables debug mode.")
-    let counterOpt = CounterOption(shortFlag: "v", longFlag: "verbose",
-      helpMessage: "Enables verbose output. Specify multiple times for extra verbosity.")
-    let stringOpt = StringOption(shortFlag: "n", longFlag: "name", required: true,
-      helpMessage: "Name a Cy Young winner.")
-    let intOpt = IntOption(shortFlag: "f", longFlag: "favorite", required: true,
-      helpMessage: "Your favorite number.")
-    let doubleOpt = DoubleOption(shortFlag: "p", longFlag: "p-value", required: true,
-      helpMessage: "P-value for test.")
-    let extraOpt = MultiStringOption(shortFlag: "x", longFlag: "Extra", required: true,
-      helpMessage: "X is for Extra.")
+    let counterOpt = CounterOption(
+      shortFlag: "v", longFlag: "verbose",
+      helpMessage: "Enables verbose output. Specify multiple times for extra verbosity."
+    )
+    let stringOpt = StringOption(
+      shortFlag: "n", longFlag: "name", required: true,
+      helpMessage: "Name a Cy Young winner."
+    )
+    let intOpt = IntOption(
+      shortFlag: "f", longFlag: "favorite", required: true,
+      helpMessage: "Your favorite number."
+    )
+    let doubleOpt = DoubleOption(
+      shortFlag: "p", longFlag: "p-value", required: true,
+      helpMessage: "P-value for test."
+    )
+    let extraOpt = MultiStringOption(
+      shortFlag: "x", longFlag: "Extra", required: true,
+      helpMessage: "X is for Extra."
+    )
 
     cli.addOptions(boolOpt, counterOpt, stringOpt, intOpt, doubleOpt, extraOpt)
 
@@ -614,15 +646,19 @@ internal class CommandLineTests: XCTestCase {
       XCTAssertEqual(stringOpt.value, "John Q. Public", "Failed to get correct string value from mixed command line")
       XCTAssertEqual(intOpt.value, 45, "Failed to get correct int value from mixed command line")
       XCTAssertEqual(doubleOpt.value, 0.05, "Failed to get correct double value from mixed command line")
-      XCTAssertEqual(extraOpt.value?.count  , 3, "Failed to get correct number of multistring options from mixed command line")
+      XCTAssertEqual(extraOpt.value?.count, 3, "Failed to get correct number of multistring options from mixed command line")
     } catch {
       XCTFail("Failed to parse mixed command line: \(error)")
     }
   }
 
   func testWasSetProperty() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-a", "-b", "-c", "str", "-d", "1",
-      "-e", "3.14159", "-f", "extra1", "extra2", "extra3" ])
+    let cli = CommandLine(
+      arguments: [
+        "CommandLineTests", "-a", "-b", "-c", "str", "-d", "1",
+        "-e", "3.14159", "-f", "extra1", "extra2", "extra3",
+      ]
+    )
 
     setlocale(LC_ALL, "C")
 
@@ -632,7 +668,7 @@ internal class CommandLineTests: XCTestCase {
       StringOption(shortFlag: "c", longFlag: "str", helpMessage: "A set string option"),
       IntOption(shortFlag: "d", longFlag: "int", helpMessage: "A set int option"),
       DoubleOption(shortFlag: "e", longFlag: "double", helpMessage: "A set double option"),
-      MultiStringOption(shortFlag: "f", longFlag: "multi", helpMessage: "A set multistring option")
+      MultiStringOption(shortFlag: "f", longFlag: "multi", helpMessage: "A set multistring option"),
     ]
 
     let unsetOptions = [
@@ -641,7 +677,7 @@ internal class CommandLineTests: XCTestCase {
       StringOption(shortFlag: "w", longFlag: "unstr", helpMessage: "An unset string option"),
       IntOption(shortFlag: "y", longFlag: "unint", helpMessage: "An unset int option"),
       DoubleOption(shortFlag: "x", longFlag: "undouble", helpMessage: "An unset double option"),
-      MultiStringOption(shortFlag: "z", longFlag: "unmulti", helpMessage: "An unset multistring option")
+      MultiStringOption(shortFlag: "z", longFlag: "unmulti", helpMessage: "An unset multistring option"),
     ]
 
     cli.addOptions(setOptions)
@@ -693,7 +729,7 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testStrictMode() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "--valid", "--invalid"])
+    let cli = CommandLine(arguments: ["CommandLineTests", "--valid", "--invalid"])
     let validOpt = BoolOption(shortFlag: "v", longFlag: "valid", helpMessage: "Known flag.")
     cli.addOptions(validOpt)
 
@@ -714,7 +750,7 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testUnparsedArguments() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "onefish", "twofish", "-b", "redfish", "-c", "green", "blue", "-xvvi", "9", "-w", "--who", "--formats=json", "xml", "binary", "--verbose", "fish", "--type=pdf", "woo!"])
+    let cli = CommandLine(arguments: ["CommandLineTests", "onefish", "twofish", "-b", "redfish", "-c", "green", "blue", "-xvvi", "9", "-w", "--who", "--formats=json", "xml", "binary", "--verbose", "fish", "--type=pdf", "woo!"])
     let o1 = BoolOption(shortFlag: "b", longFlag: "bool", helpMessage: "Boolean option")
     let o2 = StringOption(shortFlag: "c", longFlag: "color", helpMessage: "String option")
     let o3 = BoolOption(shortFlag: "x", longFlag: "extract", helpMessage: "Combined bool option")
@@ -740,7 +776,7 @@ internal class CommandLineTests: XCTestCase {
     }
 
     do {
-      let cli = CommandLine(arguments: [ "CommandLineTests", "onefish", "twofish", "-b", "redfish", "-c", "green", "blue", "-xvvi", "9", "--formats=json", "xml", "binary", "--verbose", "fish", "--type=pdf", "woo!"])
+      let cli = CommandLine(arguments: ["CommandLineTests", "onefish", "twofish", "-b", "redfish", "-c", "green", "blue", "-xvvi", "9", "--formats=json", "xml", "binary", "--verbose", "fish", "--type=pdf", "woo!"])
       o4.reset()
       cli.addOptions(o1, o2, o3, o4, o5, o6, o7)
 
@@ -759,7 +795,7 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testInvalidArgumentErrorDescription() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "--int", "invalid"])
+    let cli = CommandLine(arguments: ["CommandLineTests", "--int", "invalid"])
     let o1 = IntOption(longFlag: "int", helpMessage: "Int flag.")
     cli.addOptions(o1)
 
@@ -771,7 +807,7 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testMissingRequiredOptionsErrorDescription() {
-    let cli = CommandLine(arguments: [ "CommandLineTests"])
+    let cli = CommandLine(arguments: ["CommandLineTests"])
     let o1 = IntOption(longFlag: "int", required: true, helpMessage: "Int flag.")
     cli.addOptions(o1)
 
@@ -784,20 +820,34 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testPrintUsage() {
-    let cli = CommandLine(arguments: [ "CommandLineTests", "-dvvv", "--name", "John Q. Public",
-      "-f", "45", "-p", "0.05", "-x", "extra1", "extra2", "extra3" ])
+    let cli = CommandLine(
+      arguments: [
+        "CommandLineTests", "-dvvv", "--name", "John Q. Public",
+        "-f", "45", "-p", "0.05", "-x", "extra1", "extra2", "extra3",
+      ]
+    )
 
     let boolOpt = BoolOption(shortFlag: "d", longFlag: "debug", helpMessage: "Enables debug mode.")
-    let counterOpt = CounterOption(shortFlag: "v", longFlag: "verbose",
-      helpMessage: "Enables verbose output. Specify multiple times for extra verbosity.")
-    let stringOpt = StringOption(shortFlag: "n", longFlag: "name", required: true,
-      helpMessage: "Name a Cy Young winner.")
-    let intOpt = IntOption(shortFlag: "f", longFlag: "favorite", required: true,
-      helpMessage: "Your favorite number.")
-    let doubleOpt = DoubleOption(shortFlag: "p", longFlag: "p-value", required: true,
-      helpMessage: "P-value for test.")
-    let extraOpt = MultiStringOption(shortFlag: "x", longFlag: "Extra", required: true,
-      helpMessage: "X is for Extra.")
+    let counterOpt = CounterOption(
+      shortFlag: "v", longFlag: "verbose",
+      helpMessage: "Enables verbose output. Specify multiple times for extra verbosity."
+    )
+    let stringOpt = StringOption(
+      shortFlag: "n", longFlag: "name", required: true,
+      helpMessage: "Name a Cy Young winner."
+    )
+    let intOpt = IntOption(
+      shortFlag: "f", longFlag: "favorite", required: true,
+      helpMessage: "Your favorite number."
+    )
+    let doubleOpt = DoubleOption(
+      shortFlag: "p", longFlag: "p-value", required: true,
+      helpMessage: "P-value for test."
+    )
+    let extraOpt = MultiStringOption(
+      shortFlag: "x", longFlag: "Extra", required: true,
+      helpMessage: "X is for Extra."
+    )
 
     let opts = [boolOpt, counterOpt, stringOpt, intOpt, doubleOpt, extraOpt]
     cli.addOptions(opts)
@@ -811,9 +861,13 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testPrintUsageError() {
-    let cli = CommandLine(arguments: [ "CommandLineTests" ])
-    cli.addOption(StringOption(shortFlag: "n", longFlag: "name", required: true,
-      helpMessage: "Your name"))
+    let cli = CommandLine(arguments: ["CommandLineTests"])
+    cli.addOption(
+      StringOption(
+        shortFlag: "n", longFlag: "name", required: true,
+        helpMessage: "Your name"
+      )
+    )
 
     do {
       try cli.parse()
@@ -828,9 +882,13 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testPrintUsageToStderr() {
-    let cli = CommandLine(arguments: [ "CommandLineTests" ])
-    cli.addOption(StringOption(shortFlag: "n", longFlag: "name", required: true,
-      helpMessage: "Your name"))
+    let cli = CommandLine(arguments: ["CommandLineTests"])
+    cli.addOption(
+      StringOption(
+        shortFlag: "n", longFlag: "name", required: true,
+        helpMessage: "Your name"
+      )
+    )
 
     /* Toss stderr into /dev/null, so the printUsage() output doesn't pollute regular
      * XCTest messages.
@@ -852,7 +910,7 @@ internal class CommandLineTests: XCTestCase {
   }
 
   func testCustomOutputFormatter() {
-    let cli = CommandLine(arguments: [ "CommandLineTests" ])
+    let cli = CommandLine(arguments: ["CommandLineTests"])
     cli.formatOutput = { s, type in
       switch type {
       case .about:
@@ -867,16 +925,26 @@ internal class CommandLineTests: XCTestCase {
     }
 
     let boolOpt = BoolOption(shortFlag: "d", longFlag: "debug", helpMessage: "Enables debug mode.")
-    let counterOpt = CounterOption(shortFlag: "v", longFlag: "verbose",
-      helpMessage: "Enables verbose output. Specify multiple times for extra verbosity.")
-    let stringOpt = StringOption(shortFlag: "n", longFlag: "name", required: true,
-      helpMessage: "Name a Cy Young winner.")
-    let intOpt = IntOption(shortFlag: "f", longFlag: "favorite", required: true,
-      helpMessage: "Your favorite number.")
-    let doubleOpt = DoubleOption(shortFlag: "p", longFlag: "p-value", required: true,
-      helpMessage: "P-value for test.")
-    let extraOpt = MultiStringOption(shortFlag: "x", longFlag: "Extra", required: true,
-      helpMessage: "X is for Extra.")
+    let counterOpt = CounterOption(
+      shortFlag: "v", longFlag: "verbose",
+      helpMessage: "Enables verbose output. Specify multiple times for extra verbosity."
+    )
+    let stringOpt = StringOption(
+      shortFlag: "n", longFlag: "name", required: true,
+      helpMessage: "Name a Cy Young winner."
+    )
+    let intOpt = IntOption(
+      shortFlag: "f", longFlag: "favorite", required: true,
+      helpMessage: "Your favorite number."
+    )
+    let doubleOpt = DoubleOption(
+      shortFlag: "p", longFlag: "p-value", required: true,
+      helpMessage: "P-value for test."
+    )
+    let extraOpt = MultiStringOption(
+      shortFlag: "x", longFlag: "Extra", required: true,
+      helpMessage: "X is for Extra."
+    )
 
     let opts = [boolOpt, counterOpt, stringOpt, intOpt, doubleOpt, extraOpt]
     cli.addOptions(opts)

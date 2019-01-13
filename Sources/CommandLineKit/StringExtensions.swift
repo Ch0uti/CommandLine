@@ -40,9 +40,9 @@ internal extension String {
    * - returns: A Double if the string can be parsed, nil otherwise.
    */
   func toDouble() -> Double? {
-    let decimalPoint = String(self._localDecimalPoint())
-    guard decimalPoint == "." || self.range(of: ".") == nil else { return nil }
-    let localeSelf = self.replacingOccurrences(of: decimalPoint, with: ".")
+    let decimalPoint = String(_localDecimalPoint())
+    guard decimalPoint == "." || range(of: ".") == nil else { return nil }
+    let localeSelf = replacingOccurrences(of: decimalPoint, with: ".")
     return Double(localeSelf)
   }
 
@@ -56,7 +56,7 @@ internal extension String {
    */
   func padded(toWidth width: Int, with padChar: Character = " ") -> String {
     var s = self
-    var currentLength = self.count
+    var currentLength = count
 
     while currentLength < width {
       s.append(padChar)
@@ -83,7 +83,7 @@ internal extension String {
     var s = ""
     var currentLineWidth = 0
 
-    for word in self.split(separator: splitBy) {
+    for word in split(separator: splitBy) {
       let wordLength = word.count
 
       if currentLineWidth + wordLength + 1 > width {

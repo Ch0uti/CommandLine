@@ -83,7 +83,7 @@ public class Option {
     return flag == shortFlag || flag == longFlag
   }
 
-  func setValue(_ values: [String]) -> Bool {
+  func setValue(_: [String]) -> Bool {
     return false
   }
 }
@@ -99,11 +99,11 @@ public class BoolOption: Option {
     return _value
   }
 
-  override public var wasSet: Bool {
+  public override var wasSet: Bool {
     return _value
   }
 
-  override func setValue(_ values: [String]) -> Bool {
+  override func setValue(_: [String]) -> Bool {
     _value = true
     return true
   }
@@ -117,16 +117,16 @@ public class IntOption: Option {
     return _value
   }
 
-  override public var wasSet: Bool {
+  public override var wasSet: Bool {
     return _value != nil
   }
 
-  override public var claimedValues: Int {
+  public override var claimedValues: Int {
     return _value != nil ? 1 : 0
   }
 
   override func setValue(_ values: [String]) -> Bool {
-    if values.count == 0 {
+    if values.isEmpty {
       return false
     }
 
@@ -150,7 +150,7 @@ public class CounterOption: Option {
     return _value
   }
 
-  override public var wasSet: Bool {
+  public override var wasSet: Bool {
     return _value > 0
   }
 
@@ -158,7 +158,7 @@ public class CounterOption: Option {
     _value = 0
   }
 
-  override func setValue(_ values: [String]) -> Bool {
+  override func setValue(_: [String]) -> Bool {
     _value += 1
     return true
   }
@@ -172,16 +172,16 @@ public class DoubleOption: Option {
     return _value
   }
 
-  override public var wasSet: Bool {
+  public override var wasSet: Bool {
     return _value != nil
   }
 
-  override public var claimedValues: Int {
+  public override var claimedValues: Int {
     return _value != nil ? 1 : 0
   }
 
   override func setValue(_ values: [String]) -> Bool {
-    if values.count == 0 {
+    if values.isEmpty {
       return false
     }
 
@@ -196,22 +196,22 @@ public class DoubleOption: Option {
 
 /**  An option that accepts a string value. */
 public class StringOption: Option {
-  private var _value: String? = nil
+  private var _value: String?
 
   public var value: String? {
     return _value
   }
 
-  override public var wasSet: Bool {
+  public override var wasSet: Bool {
     return _value != nil
   }
 
-  override public var claimedValues: Int {
+  public override var claimedValues: Int {
     return _value != nil ? 1 : 0
   }
 
   override func setValue(_ values: [String]) -> Bool {
-    if values.count == 0 {
+    if values.isEmpty {
       return false
     }
 
@@ -228,11 +228,11 @@ public class MultiStringOption: Option {
     return _value
   }
 
-  override public var wasSet: Bool {
+  public override var wasSet: Bool {
     return _value != nil
   }
 
-  override public var claimedValues: Int {
+  public override var claimedValues: Int {
     if let v = _value {
       return v.count
     }
@@ -241,7 +241,7 @@ public class MultiStringOption: Option {
   }
 
   override func setValue(_ values: [String]) -> Bool {
-    if values.count == 0 {
+    if values.isEmpty {
       return false
     }
 
@@ -251,17 +251,17 @@ public class MultiStringOption: Option {
 }
 
 /** An option that represents an enum value. */
-public class EnumOption<T:RawRepresentable>: Option where T.RawValue == String {
+public class EnumOption<T: RawRepresentable>: Option where T.RawValue == String {
   private var _value: T?
   public var value: T? {
     return _value
   }
 
-  override public var wasSet: Bool {
+  public override var wasSet: Bool {
     return _value != nil
   }
 
-  override public var claimedValues: Int {
+  public override var claimedValues: Int {
     return _value != nil ? 1 : 0
   }
 
@@ -289,7 +289,7 @@ public class EnumOption<T:RawRepresentable>: Option where T.RawValue == String {
   }
 
   override func setValue(_ values: [String]) -> Bool {
-    if values.count == 0 {
+    if values.isEmpty {
       return false
     }
 
@@ -300,5 +300,4 @@ public class EnumOption<T:RawRepresentable>: Option where T.RawValue == String {
 
     return false
   }
-
 }

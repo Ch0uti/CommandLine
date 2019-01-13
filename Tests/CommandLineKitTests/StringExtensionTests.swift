@@ -20,7 +20,7 @@ import XCTest
 @testable import CommandLineKit
 
 class StringExtensionTests: XCTestCase {
-  static var allTests : [(String, (StringExtensionTests) -> () throws -> Void)] {
+  static var allTests: [(String, (StringExtensionTests) -> () throws -> Void)] {
     return [
       ("testToDouble", testToDouble),
       ("testPadded", testPadded),
@@ -48,7 +48,6 @@ class StringExtensionTests: XCTestCase {
     let d = "-2099".toDouble()
     XCTAssertEqual(d, -2099, "Failed to parse negative int as double")
 
-
     /* Zero handling */
     let e = "0.0".toDouble()
     XCTAssertEqual(e, 0, "Failed to parse zero double")
@@ -68,9 +67,8 @@ class StringExtensionTests: XCTestCase {
     let j = "-0.000000000000000".toDouble()
     XCTAssertEqual(j, 0, "Failed to parse very long negative zero double")
 
-
     /* Various extraneous chars */
-    let k = "+42.3".toDouble()      // 4 Jan 2017: leading + is valid language syntax
+    let k = "+42.3".toDouble() // 4 Jan 2017: leading + is valid language syntax
     XCTAssertEqual(k, 42.3, "Failed to parse double with leading +")
 
     let l = " 827.2".toDouble()
@@ -98,12 +96,18 @@ class StringExtensionTests: XCTestCase {
   func testPadded() {
     let a = "this is a test"
 
-    XCTAssertEqual(a.padded(toWidth: 80).count,
-                   80, "Failed to pad to correct width")
-    XCTAssertEqual(a.padded(toWidth: 5).count,
-                   a.count, "Bad padding when pad width is less than string width")
-    XCTAssertEqual(a.padded(toWidth: -2).count,
-                   a.count, "Bad padding with negative pad width")
+    XCTAssertEqual(
+      a.padded(toWidth: 80).count,
+      80, "Failed to pad to correct width"
+    )
+    XCTAssertEqual(
+      a.padded(toWidth: 5).count,
+      a.count, "Bad padding when pad width is less than string width"
+    )
+    XCTAssertEqual(
+      a.padded(toWidth: -2).count,
+      a.count, "Bad padding with negative pad width"
+    )
 
     let b = a.padded(toWidth: 80)
     let lastBCharIndex = b.index(before: b.endIndex)

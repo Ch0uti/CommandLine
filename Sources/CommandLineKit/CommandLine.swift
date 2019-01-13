@@ -168,7 +168,7 @@ public class CommandLine {
         let vs = vals.joined(separator: ", ")
         return "Invalid value(s) for option \(opt.flagDescription): \(vs)"
       case let .missingRequiredOptions(opts):
-        return "Missing required options: \(opts.map { return $0.flagDescription })"
+        return "Missing required options: \(opts.map { $0.flagDescription })"
       }
     }
   }
@@ -182,7 +182,7 @@ public class CommandLine {
    * - returns: An initalized CommandLine object.
    */
   public init(arguments: [String] = Swift.CommandLine.arguments) {
-    self._arguments = arguments
+    _arguments = arguments
 
     /* Initialize locale settings from the environment */
     setlocale(LC_ALL, "")
@@ -197,14 +197,14 @@ public class CommandLine {
       args.append(a)
     }
 
-    for i in flagIndex + 1 ..< _arguments.count {
+    for i in flagIndex + 1..<_arguments.count {
       if !skipFlagChecks {
         if _arguments[i] == argumentStopper {
           skipFlagChecks = true
           continue
         }
 
-        if _arguments[i].hasPrefix(shortOptionPrefix) && Int(_arguments[i]) == nil &&
+        if _arguments[i].hasPrefix(shortOptionPrefix), Int(_arguments[i]) == nil,
           _arguments[i].toDouble() == nil {
           break
         }
@@ -338,8 +338,8 @@ public class CommandLine {
         for (i, c) in flagCharactersEnumerator {
           for option in _options where option.flagMatch(String(c)) {
             /* Values are allowed at the end of the concatenated flags, e.g.
-            * -xvf <file1> <file2>
-            */
+             * -xvf <file1> <file2>
+             */
             let vals = (i == flagLength - 1) ? self._getFlagValues(idx, attachedArg) : [String]()
             guard option.setValue(vals) else {
               throw ParseError.invalidValueForOption(option, vals)
@@ -365,7 +365,7 @@ public class CommandLine {
 
     /* Check to see if any required options were not matched */
     let missingOptions = _options.filter { $0.required && !$0.wasSet }
-    guard missingOptions.count == 0 else {
+    guard missingOptions.isEmpty else {
       throw ParseError.missingRequiredOptions(missingOptions)
     }
 
