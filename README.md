@@ -1,8 +1,6 @@
-# CommandLineKit [![Build Status](https://travis-ci.org/jatoben/CommandLine.svg?branch=master)](https://travis-ci.org/jatoben/CommandLine)
+# CommandLineKit [![Build Status](https://travis-ci.org/Ch0uti/CommandLine.svg?branch=master)](https://travis-ci.org/Ch0uti/CommandLine)
 
 A pure Swift library for creating command-line interfaces.
-
-*Note: CommandLineKit `master` requires Xcode 8 / Swift 3.0. If you're using older versions of Swift, please check out the [earlier releases](https://github.com/jatoben/CommandLine/releases).*
 
 ## Usage
 
@@ -11,23 +9,31 @@ CommandLine aims to have a simple and self-explanatory API.
 ```swift
 import CommandLineKit
 
-let cli = CommandLineKit.CommandLine()
+let commandLine = CommandLineKit.CommandLine()
 
-let filePath = StringOption(shortFlag: "f", longFlag: "file", required: true,
-  helpMessage: "Path to the output file.")
-let compress = BoolOption(shortFlag: "c", longFlag: "compress",
-  helpMessage: "Use data compression.")
-let help = BoolOption(shortFlag: "h", longFlag: "help",
-  helpMessage: "Prints a help message.")
-let verbosity = CounterOption(shortFlag: "v", longFlag: "verbose",
-  helpMessage: "Print verbose messages. Specify multiple times to increase verbosity.")
+let filePath = StringOption(
+  shortFlag: "f", longFlag: "file", required: true,
+  helpMessage: "Path to the output file."
+)
+let compress = BoolOption(
+  shortFlag: "c", longFlag: "compress",
+  helpMessage: "Use data compression."
+)
+let help = BoolOption(
+  shortFlag: "h", longFlag: "help",
+  helpMessage: "Prints a help message."
+)
+let verbosity = CounterOption(
+  shortFlag: "v", longFlag: "verbose",
+  helpMessage: "Print verbose messages. Specify multiple times to increase verbosity."
+)
 
-cli.addOptions(filePath, compress, help, verbosity)
+commandLine.addOptions(filePath, compress, help, verbosity)
 
 do {
-  try cli.parse()
+  try commandLine.parse()
 } catch {
-  cli.printUsage(error)
+  commandLine.printUsage(error)
   exit(EX_USAGE)
 }
 
@@ -66,20 +72,20 @@ You can fully customize the usage message by supplying a `formatOutput` function
 ```swift
 import Rainbow
 
-cli.formatOutput = { s, type in
-  var str: String
+commandLine.formatOutput = { string, type in
+  var colorString: String
   switch(type) {
-  case .Error:
-    str = s.red.bold
-  case .OptionFlag:
-    str = s.green.underline
-  case .OptionHelp:
-    str = s.blue
+  case .error:
+    colorString = string.red.bold
+  case .optionFlag:
+    colorString = string.green.underline
+  case .optionHelp:
+    colorString = string.blue
   default:
-    str = s
+    colorString = string
   }
 
-  return cli.defaultFormat(str, type: type)
+  return commandLine.defaultFormat(s: colorString, type: type)
 }
 ```
 
@@ -119,30 +125,32 @@ $ LC_NUMERIC=sv_SE.UTF-8 ./example2 --float 3,1419
 
 ```swift
 enum Operation: String {
-  case create  = "c"
+  case create = "c"
   case extract = "x"
-  case list    = "l"
-  case verify  = "v"
+  case list = "l"
+  case verify = "v"
 }
 
-let cli = CommandLineKit.CommandLine()
-let op = EnumOption<Operation>(shortFlag: "o", longFlag: "operation", required: true,
-  helpMessage: "File operation - c for create, x for extract, l for list, or v for verify.")
-cli.setOptions(op)
+let commandLine = CommandLineKit.CommandLine()
+let option = EnumOption<Operation>(
+  shortFlag: "o", longFlag: "operation", required: true,
+  helpMessage: "File operation - c for create, x for extract, l for list, or v for verify."
+)
+commandLine.setOptions(option)
 
 do {
-  try cli.parse()
+  try commandLine.parse()
 } catch {
-  cli.printUsage(error)
+  commandLine.printUsage(error)
   exit(EX_USAGE)
 }
 
-switch op.value {
-  case Operation.Create:
-    // Create file
+switch option.value {
+case .create:
+  // Create file
 
-  case Operation.Extract:
-    // Extract file
+case .extract:
+  // Extract file
 
   // Remainder of cases
 }
