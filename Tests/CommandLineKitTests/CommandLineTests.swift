@@ -814,7 +814,7 @@ internal class CommandLineTests: XCTestCase {
     do {
       try cli.parse()
     } catch {
-      let requiredOptions = [o1].map { return $0.flagDescription }
+      let requiredOptions = [o1].map { $0.flagDescription }
       XCTAssertTrue("\(error)".hasSuffix("options: \(requiredOptions)"), "Invalid error description: \(error)")
     }
   }

@@ -10,6 +10,10 @@ let package = Package(
       targets: ["CommandLineKit"]
     ),
   ],
+  dependencies: [
+    // development dependencies
+    .package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.37.2"),
+  ],
   targets: [
     .target(
       name: "CommandLineKit",

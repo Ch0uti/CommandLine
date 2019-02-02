@@ -3,9 +3,9 @@
 
 # format options
 --decimalgrouping none
+--hexgrouping none
 --importgrouping testable-bottom
 --indent 2
+--octalgrouping none
 --ranges nospace
 --self init-only
---wraparguments beforefirst
---wrapcollections beforefirst
