@@ -96,18 +96,9 @@ class StringExtensionTests: XCTestCase {
   func testPadded() {
     let a = "this is a test"
 
-    XCTAssertEqual(
-      a.padded(toWidth: 80).count,
-      80, "Failed to pad to correct width"
-    )
-    XCTAssertEqual(
-      a.padded(toWidth: 5).count,
-      a.count, "Bad padding when pad width is less than string width"
-    )
-    XCTAssertEqual(
-      a.padded(toWidth: -2).count,
-      a.count, "Bad padding with negative pad width"
-    )
+    XCTAssertEqual(a.padded(toWidth: 80).count, 80, "Failed to pad to correct width")
+    XCTAssertEqual(a.padded(toWidth: 5).count, a.count, "Bad padding when pad width is less than string width")
+    XCTAssertEqual(a.padded(toWidth: -2).count, a.count, "Bad padding with negative pad width")
 
     let b = a.padded(toWidth: 80)
     let lastBCharIndex = b.index(before: b.endIndex)
