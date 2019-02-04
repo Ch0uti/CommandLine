@@ -30,12 +30,20 @@ let argumentStopper = "--"
  */
 let argumentAttacher: Character = "="
 
-/* An output stream to stderr; used by CommandLine.printUsage(). */
+/* An output stream to stderr; */
 private struct StderrOutputStream: TextOutputStream {
-  static let stream = StderrOutputStream()
-  func write(_ s: String) {
-    fputs(s, stderr)
-  }
+    static let stream = StderrOutputStream()
+    func write(_ s: String) {
+        fputs(s, stderr)
+    }
+}
+
+/* An output stream to stdout; */
+private struct StdoutOutputStream: TextOutputStream {
+    static let stream = StdoutOutputStream()
+    func write(_ s: String) {
+        fputs(s, stdout)
+    }
 }
 
 /**
@@ -444,7 +452,7 @@ public class CommandLine {
    * Prints a usage message.
    */
   public func printUsage() {
-    var out = StderrOutputStream.stream
+    var out = StdoutOutputStream.stream
     printUsage(&out)
   }
 }
